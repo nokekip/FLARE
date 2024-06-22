@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+# forecast homepage view
+def home(request):
+    # return render(request, 'forecast/home.html')
+    return render(request, 'base.html')
