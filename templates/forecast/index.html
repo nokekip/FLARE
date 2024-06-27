@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}FLARE - Weather Forecast{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="container card text-white forecast-container mt-5">
+              <div class="header">
+                  <h1 class="mb-3">Weather Forecast</h1>
+                  <form action="" method="POST" class="d-flex justify-content-center" role="search">
+                      <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-primary" type="submit">Search</button>
+                  </form>
+              </div>
+              <div class="current-weather">
+                      <div class="current-weather-icon">
+                          <img src="http://openweathermap.org/img/w/.png" alt="">
+                      </div>
+                      <div class="weather-info">
+                          <h2>nakuru - kenya </h2>
+                          <p class="temperature">21°C</p>
+                          <div class="details">
+                              <p>Description: misty</p>
+                              <p>Humidity: 80%</p>
+                              <p>Wind: 14km/h</p>
+                              <p>H: 21°C  L: 15°C</p>
+                          </div>
+                      </div>
+              </div>
+              <div class="forecast">
+                    <div class="day">
+                        <div class="weather-icon">
+                            <img src="http://openweathermap.org/img/w/.png" alt="">
+                        </div>
+                        <p>21°C</p>
+                        <p>monday</p>
+                    </div>
+              </div>
+          </div>
+    </div>
+{% endblock content %}
