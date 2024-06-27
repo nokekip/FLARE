@@ -2,38 +2,47 @@
 {% block title %}FLARE - Weather Forecast{% endblock title %}
 {% block content %}
     <div class="container">
-        <div class="container card text-white forecast-container mt-5">
-              <div class="header">
-                  <h1 class="mb-3">Weather Forecast</h1>
-                  <form action="" method="POST" class="d-flex justify-content-center" role="search">
-                      <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-primary" type="submit">Search</button>
-                  </form>
-              </div>
-              <div class="current-weather">
-                      <div class="current-weather-icon">
-                          <img src="http://openweathermap.org/img/w/.png" alt="">
-                      </div>
-                      <div class="weather-info">
-                          <h2>nakuru - kenya </h2>
-                          <p class="temperature">21°C</p>
-                          <div class="details">
-                              <p>Description: misty</p>
-                              <p>Humidity: 80%</p>
-                              <p>Wind: 14km/h</p>
-                              <p>H: 21°C  L: 15°C</p>
-                          </div>
-                      </div>
-              </div>
-              <div class="forecast">
-                    <div class="day">
-                        <div class="weather-icon">
-                            <img src="http://openweathermap.org/img/w/.png" alt="">
-                        </div>
-                        <p>21°C</p>
-                        <p>monday</p>
+        <div class="container card forecast-container mt-5">
+            <div class="header">
+                <h1 class="mb-3">Weather Forecast</h1>
+                <form action="" method="POST" class="d-flex justify-content-center" role="search">
+                    {% csrf_token %}
+                    <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="current-weather">
+                {% if weather_data %}
+                    <div class="current-weather-icon">
+                        <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                     </div>
-              </div>
-          </div>
+                    <div class="weather-info">
+                        <h2>{{weather_data.city}} - {{weather_data.country}} </h2>
+                        <p class="temperature">{{ weather_data.temperature }}°C</p>
+                        <div class="details">
+                            <p>Description: {{ weather_data.description}}</p>
+                            <p>Humidity: {{weather_data.humidity}}%</p>
+                            <p>Wind: {{weather_data.wind_speed}}km/h</p>
+                            <p>H: {{weather_data.max_temp}}°C  L: {{weather_data.min_temp}}°C</p>
+                        </div>
+                    </div>
+                {% endif %}
+    
+                
+            </div>
+            <div class="forecast">
+                {% if forecast_data %}
+                    {% for forecast in forecast_data %}
+                        <div class="card day">
+                            <div class="weather-icon">
+                                <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                            </div>
+                            <p>{{forecast.temperature}}°C</p>
+                            <p>{{forecast.day}}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock content %}
