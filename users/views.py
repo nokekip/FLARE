@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import RegisterUserForm
 
 
@@ -24,6 +24,7 @@ def register(request):
             'form': form
         }
         return render(request, 'users/register.html', context)
+    
 # login view
 def login_user(request):
     if request.method == 'POST':
@@ -39,3 +40,9 @@ def login_user(request):
             messages.warning(request, 'Invalid credentials')
             return redirect('login-user')
     return render(request, 'users/login.html')
+
+# logout view
+def logout_user(request):
+    logout(request)
+    messages.success(request, 'You are now logged out')
+    return redirect('home')
