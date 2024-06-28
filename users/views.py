@@ -6,6 +6,8 @@ from .forms import RegisterUserForm
 
 # register view
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     form = RegisterUserForm()
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
@@ -27,6 +29,8 @@ def register(request):
     
 # login view
 def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
