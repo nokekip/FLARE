@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Profile - FLARE{% endblock title %}
+{% block content %}
+{% load widget_tweaks %}
+    <div class="container">
+        <div class="container card profile-container mt-5">
+            <div class="header">
+                <h1 class="mb-3">Profile</h1>
+                <p>welcome {{ user.username }}</p>
+            </div>
+            <div class="profile-info">
+                <p>Username: {{ user.username }}</p>
+                <p>Email: {{ user.email }}</p>
+                <p>Last login: </p>
+            </div>
+            <!-- update user -->
+             <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Update user
+            </button>
+        
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Update Profile</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                              <label for="email" class="form-label"
+                                >{{ profile_form.avatar.label }}</label
+                              >
+                              {% render_field profile_form.avatar class="form-control" %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label"
+                                  >{{ profile_form.username.label }}</label
+                                >
+                                {% render_field profile_form.username class="form-control" %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label"
+                                  >{{ profile_form.email.label }}</label
+                                >
+                                {% render_field profile_form.email class="form-control" %}
+                            </div>
+                            <input type="submit" value="Update" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock content %}

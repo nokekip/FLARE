@@ -38,11 +38,11 @@
           </li>
           <li class="nav-item me-3 me-lg-0 dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle" height="22"
+              <img src="{{ request.user.avatar.url }}" class="rounded-circle" height="22"
               alt="" loading="lazy" />
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
               <li><a class="dropdown-item" href="{% url 'logout-user' %}">Logout</a></li>
             </ul>
           </li>
