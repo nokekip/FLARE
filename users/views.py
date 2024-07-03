@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from .forms import RegisterUserForm, UpdateUserForm
 
 
@@ -52,9 +53,10 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, 'You are now logged out')
-    return redirect('home')
+    return redirect('login-user')
 
 # User profile view
+@login_required
 def userProfile(request):
     user = request.user
     profile_form = UpdateUserForm(instance=user)
