@@ -43,7 +43,10 @@ def login_user(request):
         if user is not None and user.is_active:
             login(request, user)
             messages.success(request, 'You are now logged in')
-            return redirect('home')
+            if 'next' in request.POST:
+                return redirect(request.POST.get('next'))
+            else:
+                return redirect('home')
         else:
             messages.warning(request, 'Invalid credentials')
             return redirect('login-user')
