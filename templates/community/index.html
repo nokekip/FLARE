@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %}FLARE - Community{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-3 p-2">
+            <h3 class="pt-2 fs-4 fw-bold">Regions</h3>
+            <div class="p-3">
+                <ul class="list-group">
+                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-medium">Nakuru</div>
+                      </div>
+                      <span class="badge text-bg-primary rounded-pill">25</span>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-medium">Nairobi</div>
+                      </div>
+                      <span class="badge text-bg-primary rounded-pill">251</span>
+                    </li>
+                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-medium">Mombasa</div>
+                      </div>
+                      <span class="badge text-bg-primary rounded-pill">125</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="container">
+                <div class="d-flex justify-content-between py-4">
+                    <h3 class="fs-4 fw-bold" >Forums</h3>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      New Forum
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog text-black">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title fs-5" id="exampleModalLabel">Create New Forum</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="" method="POST">
+                              {% csrf_token %}
+                              <div class="mb-3">
+                                <label for="region" class="form-label">Enter a Region</label>
+                                <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" required>
+                                <datalist id="region">
+                                  <select name="" id="">
+                                    
+                                        <option value="">Baringo</option>
+                                        <option value="">Nakuru</option>
+                                        <option value="">Nairobi</option>
+                                        <option value="">Mombasa</option>
+                                    
+                                  </select>
+                                </datalist>
+                              </div>
+                              
+                              <div class="mb-3">
+                                <label for="forumname" class="form-label">Forum Name</label>
+                                <input type="text" name="name" value="" class="form-control" id="forumname" aria-describedby="forumname" required>
+                              </div>
+                              <div class="mb-3">
+                                <label for="forumdescription" class="form-label">Description</label>
+                                <textarea name="description" class="form-control" id="forumdescription" rows="3" required></textarea>
+                              </div>
+                              
+                              <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Create</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                  <div class="card auth-card text-white mb-4">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex py-2 align-items-center">
+                          <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
+                          <h6 class="ms-2 pt-2">Noke
+                        </div>
+                        <small>2 day ago</small>
+                      </div>
+                      <a href=""><h5 class="card-title">Milimani residence</h5></a>
+                      <p class="card-text">lets keep updated</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                      <div class="icon">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>12k</span>
+                      </div>
+                      <span class="badge text-bg-secondary">Nakur</span>
+                    </div>
+                  </div>
+                  <div class="card auth-card text-white mb-4">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex py-2 align-items-center">
+                          <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
+                          <h6 class="ms-2 pt-2">Noke
+                        </div>
+                        <small>2 day ago</small>
+                      </div>
+                      <a href=""><h5 class="card-title">Milimani residence</h5></a>
+                      <p class="card-text">lets keep updated</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                      <div class="icon">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>12k</span>
+                      </div>
+                      <span class="badge text-bg-secondary">Nakur</span>
+                    </div>
+                  </div>
+    
+            </div>
+        </div>
+        
+        <div class="col-3">
+            <div class="card auth-card text-white my-4">
+              <h5 class="card-header fw-bold fs-4">Weather Alerts</h5>
+              <div class="card-body">
+                <div class="card text-whit bg-light mb-3">
+                  <div class="card-body">
+    
+                    <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                      <span class="badge text-bg-secondary">nakuru</span>
+                        <small class="fs-6 text-muted">now</small>
+                    </div>
+                    <p class="card-text">Brige swept</p>
+                  </div>
+                </div>
+                <div class="card text-whit bg-light mb-3">
+                    <div class="card-body">
+      
+                      <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                        <span class="badge text-bg-secondary">nakuru</span>
+                          <small class="fs-6 text-muted">now</small>
+                      </div>
+                      <p class="card-text">Brige swept</p>
+                    </div>
+                  </div>
+                  <div class="card text-whit bg-light mb-3">
+                    <div class="card-body">
+      
+                      <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                        <span class="badge text-bg-secondary">nakuru</span>
+                          <small class="fs-6 text-muted">now</small>
+                      </div>
+                      <p class="card-text">Brige swept</p>
+                    </div>
+                  </div>
+              </div>
+    
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock content %}
