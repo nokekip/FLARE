@@ -6,3 +6,6 @@ from django.contrib.auth.decorators import login_required
 def community_home(request):
     return render(request, 'community/index.html')
 
+# forum view
+def forum(request):
+    return render(request, 'community/forum.html')
