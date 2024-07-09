@@ -1,31 +1,24 @@
 {% extends 'base.html' %}
 {% block title %}FLARE - Community{% endblock title %}
 {% block content %}
+{% load widget_tweaks %}
 <div class="container">
     <div class="row">
         <div class="col-3 p-2">
-            <h3 class="pt-2 fs-4 fw-bold">Regions</h3>
-            <div class="p-3">
-                <ul class="list-group">
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Nakuru</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">25</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Nairobi</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">251</span>
-                    </li>
-                    <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <div class="ms-2 me-auto">
-                        <div class="fw-medium">Mombasa</div>
-                      </div>
-                      <span class="badge text-bg-primary rounded-pill">125</span>
-                    </li>
-                </ul>
+          <h3 class="pt-2 fs-4 fw-bold">Regions</h3>
+            <div class="card auth-card">
+              <div class="p-3">
+                  <ul class="list-group">
+                    {% for region in regions %}
+                      <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                        <div class="ms-2 me-auto">
+                          <div class="fw-medium">{{region.name}}</div>
+                        </div>
+                        <span class="badge text-bg-primary rounded-pill">{{region.forum_set.all.count}}</span>
+                      </li>
+                    {% endfor %}
+                  </ul>
+              </div>
             </div>
         </div>
         <div class="col-6">
@@ -45,32 +38,28 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
-                            <form action="" method="POST">
+                            <form action="{% url 'create-forum' %}" method="POST">
                               {% csrf_token %}
                               <div class="mb-3">
                                 <label for="region" class="form-label">Enter a Region</label>
-                                <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" required>
-                                <datalist id="region">
+                                <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                                <datalist id="region-list">
                                   <select name="" id="">
-                                    
-                                        <option value="">Baringo</option>
-                                        <option value="">Nakuru</option>
-                                        <option value="">Nairobi</option>
-                                        <option value="">Mombasa</option>
-                                    
+                                    {% for region in regions %}
+                                        <option value="{{region.name}}"></option>
+                                    {% endfor %}
                                   </select>
                                 </datalist>
                               </div>
-                              
                               <div class="mb-3">
-                                <label for="forumname" class="form-label">Forum Name</label>
-                                <input type="text" name="name" value="" class="form-control" id="forumname" aria-describedby="forumname" required>
+                                <label for="forumname" class="form-label">Forum {{field.form.lael}}</label>
+                                {% render_field form.name class="form-control" id="forumname" aria-describedby="forum" %}
                               </div>
                               <div class="mb-3">
-                                <label for="forumdescription" class="form-label">Description</label>
-                                <textarea name="description" class="form-control" id="forumdescription" rows="3" required></textarea>
+                                <label for="forumdescription" class="form-label">{{field.form.label}}</label>
+                                {% render_field form.description class="form-control type_msg" id="forumdescription" aria-describedby="forumdescription" %}
                               </div>
-                              
+
                               <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Create</button>
                             </form>
                           </div>
