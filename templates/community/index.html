@@ -67,47 +67,28 @@
                       </div>
                     </div>
                 </div>
+                {% for forum in forums %}
                   <div class="card auth-card text-white mb-4">
                     <div class="card-body">
                       <div class="d-flex justify-content-between align-items-center">
                         <div class="d-flex py-2 align-items-center">
-                          <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                          <h6 class="ms-2 pt-2">Noke
+                          <img src="{{forum.owner.avatar.url}}" alt="user" class="rounded-circle" width="40" height="40">
+                          <h6 class="ms-2 pt-2">@{{forum.owner.username}}</h6>
                         </div>
-                        <small>2 day ago</small>
+                        <small>{{forum.created_at|timesince}}</small>
                       </div>
-                      <a href=""><h5 class="card-title">Milimani residence</h5></a>
-                      <p class="card-text">lets keep updated</p>
+                      <a href="{% url 'forum' forum.id %}"><h5 class="card-title">{{forum.name}}</h5></a>
+                      <p class="card-text">{{forum.description}}</p>
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                       <div class="icon">
                         <i class="fa-solid fa-user-group"></i>
-                        <span>12k</span>
+                        <span>{{forum.members.count}}</span>
                       </div>
-                      <span class="badge text-bg-secondary">Nakur</span>
+                      <span class="badge text-bg-secondary">{{forum.region}}</span>
                     </div>
                   </div>
-                  <div class="card auth-card text-white mb-4">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex py-2 align-items-center">
-                          <img src="../../static/images/avatar.svg" alt="user" class="rounded-circle" width="40" height="40">
-                          <h6 class="ms-2 pt-2">Noke
-                        </div>
-                        <small>2 day ago</small>
-                      </div>
-                      <a href=""><h5 class="card-title">Milimani residence</h5></a>
-                      <p class="card-text">lets keep updated</p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-between align-items-center">
-                      <div class="icon">
-                        <i class="fa-solid fa-user-group"></i>
-                        <span>12k</span>
-                      </div>
-                      <span class="badge text-bg-secondary">Nakur</span>
-                    </div>
-                  </div>
-    
+                {% endfor %}
             </div>
         </div>
         

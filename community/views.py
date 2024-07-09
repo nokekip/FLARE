@@ -44,5 +44,12 @@ def create_forum(request):
 
 
 # forum view
-def forum(request):
-    return render(request, 'community/forum.html')
+@login_required
+def forum(request, forum_id):
+    forum = Forum.objects.get(id=forum_id)
+    region = forum.region
+    context = {
+        'region': region,
+        'forum': forum,
+    }
+    return render(request, 'community/forum.html', context)
