@@ -1,6 +1,7 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Region, Forum
+from .models import Region, Forum, Media
 from .forms import CreateForumForm
 
 # Community home view
@@ -53,3 +54,12 @@ def forum(request, forum_id):
         'forum': forum,
     }
     return render(request, 'community/forum.html', context)
+
+# Handle media upload from websocket
+@login_required
+def upload_media(request):
+    if request.method == 'POST':
+        media = Media(file=request.FILES['file'])
+        media.save()
+        return JsonResponse({'media_url': media.file.url})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
