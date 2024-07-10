@@ -140,7 +140,15 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="input-group">
+                        <form id="chat-form">
+                            {% csrf_token %}
+                            <input type="file" class="form-control" id="formFile" multiple>
+                            <div class="input-group">
+                                <textarea class="form-control type_msg" id="text" placeholder="Type your message..."></textarea>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                        <!-- <div class="input-group">
                             <div class="input-group-append">
                                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                             </div>
@@ -148,7 +156,7 @@
                             <div class="input-group-append">
                                 <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -157,7 +165,96 @@
 
 {% endblock content %}
 {% block script %}
+    <script>
+        const forumId = "{{ forum.id }}";
+        const userName = "{{ request.user.username }}";
+    
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host + '/ws/forum/' + forumId + '/'
+        );
+
+        const chatContainer = document.querySelector('.msg_card_body');
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+
+            // determine if message is from the current user
+            const isSender = data.sender === userName;
+
+            // create message html
+            let messageHtml = '';
+            let timeDisplay = data.created_at == '0 minutes' ? 'now' : data.created_at;
+            if (isSender) {
+                messageHtml = `
+                    <div class="d-flex justify-content-end mb-4">
+                        <div class="msg_cotainer sender_msg">
+                            ${data.media_url ? `<img src="${data.media_url}" class="img_fluid msg_image">` : ''}
+                            ${data.message ? data.message : ''}
+                            <span class="msg_time_send">Now</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageHtml = `
+                    <div class="d-flex justify-content-start mb-4">
+                        <div class="img_cont_msg">
+                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            ${data.media_url ? `<img src="${data.media_url}" class="img_fluid msg_image">` : ''}
+                            ${data.message ? data.message : ''}
+                            <span class="msg_time">Now</span>
+                        </div>
+                    </div>
+                `;
+            }
+            chatContainer.innerHTML += messageHtml
+        
+
+            // Scroll to the bottom of the chat container
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        };
+
+        document.getElementById('chat-form').onsubmit = function(e) {
+            e.preventDefault();
+            const messageInput = document.getElementById('text');
+            const message = messageInput.value;
+            const mediaInput = document.getElementById('formFile');
+            const mediaFile = mediaInput.files[0];
+
+            if (mediaFile) {
+                const formData = new FormData();
+                formData.append('file', mediaFile);
+                fetch('/community/upload_media/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+    
+                    console.log("Media URL:", data.media_url);
+    
+                    chatSocket.send(JSON.stringify({
+                        'message': message,
+                        'media_url': data.media_url,
+                    }));
+                });
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'message': message,
+                        'media_url': '',
+                    }));
+                }
+        
+                messageInput.value = '';
+                mediaInput.value = '';
+        };
+
+    </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
 {% endblock script %}
