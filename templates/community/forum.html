@@ -21,42 +21,18 @@
                     </div>
                     <div class="card-body contacts_body">
                         <ui class="contacts">
+                            {% for forum in region_forums %}
                             <li class="active">
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="https://www.tutorialrepublic.com/examples/images/avatar/1.jpg" class="rounded-circle user_img">
-                                        <span class="online_icon"></span>
+                                <a href="{% url 'forum' forum.id %}">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="user_info">
+                                            <span>{{forum.name}}</span>
+                                            <p>{{ forum.description }}</p>
+                                        </div>
                                     </div>
-                                    <div class="user_info">
-                                        <span>Khalid</span>
-                                        <p>Kalid is online</p>
-                                    </div>
-                                </div>
+                                </a>
                             </li>
-                            <li>
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="https://www.tutorialrepublic.com/examples/images/avatar/1.jpg" class="rounded-circle user_img">
-                                        <span class="online_icon"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Sami</span>
-                                        <p>Sami is online</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="https://www.tutorialrepublic.com/examples/images/avatar/1.jpg" class="rounded-circle user_img">
-                                        <span class="online_icon"></span>
-                                    </div>
-                                    <div class="user_info">
-                                        <span>Sami</span>
-                                        <p>Sami is online</p>
-                                    </div>
-                                </div>
-                            </li>
+                            {% endfor %}
                         </ui>
                     </div>
                     <div class="card-footer"></div>

@@ -49,10 +49,11 @@ def create_forum(request):
 def forum(request, forum_id):
     forum = Forum.objects.get(id=forum_id)
     region = forum.region
+    region_forums = Forum.objects.filter(region=region)
     forum_messages = Message.objects.filter(forum=forum)
     context = {
-        'region': region,
         'forum': forum,
+        'region_forums': region_forums,
         'forum_messages': forum_messages,
     }
     return render(request, 'community/forum.html', context)
