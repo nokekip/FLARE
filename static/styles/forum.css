@@ -94,6 +94,13 @@ html {
   padding: 5px 10px;
   margin-bottom: 15px !important;
 }
+.contacts li:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.contacts li a {
+  text-decoration: none;
+}
+
 .active {
   background-color: rgba(0, 0, 0, 0.3);
 }

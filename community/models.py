@@ -28,4 +28,21 @@ class Forum(models.Model):
     def __str__(self):
         return self.name
 
+# Forum Media model
+class Media(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    file = models.FileField(upload_to='forum/images/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    
 
+# Forum Messages model
+class Message(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    forum = models.ForeignKey(Forum, on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(blank=True, null=True)
+    media = models.ForeignKey(Media, on_delete=models.SET_NULL, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text
