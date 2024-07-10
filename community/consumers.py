@@ -3,6 +3,8 @@ import json
 from django.conf import settings
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
+from django.utils.timesince import timesince
+from django.utils.timezone import localtime, now
 
 from .models import Forum, Message, Media
 
@@ -42,6 +44,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         forum = await self.get_forum(self.forum_id)
 
         new_message = await self.create_message(forum, user, message, media)
+        created_at = timesince(localtime(new_message.created_at), now())
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -51,6 +54,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'message': message,
                 'media_url': media_url,
                 'sender': user.username,
+                'created_at': created_at
             }
         )
 
@@ -59,12 +63,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = event['message']
         media_url = event.get('media_url', '')
         sender = event['sender']
+        created_at = event['created_at']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'media_url': media_url,
             'sender': sender,
+            'created_at': created_at,
         }))
 
     # fetch forum from the database
