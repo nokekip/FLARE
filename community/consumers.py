@@ -41,15 +41,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         forum = await self.get_forum(self.forum_id)
 
-        message = await self.create_message(forum, user, message, media)
+        new_message = await self.create_message(forum, user, message, media)
 
         # Send message to room group
         await self.channel_layer.group_send(
             self.forum_group_name,
             {
                 'type': 'chat_message',
-                'message': message.message,
-                'media_url': message.media.url if message.media else None,
+                'message': message,
+                'media_url': media_url,
                 'sender': user.username,
             }
         )
@@ -57,8 +57,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
-        media_url = event['media_url']
-        sender = event['user']
+        media_url = event.get('media_url', '')
+        sender = event['sender']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
@@ -82,10 +82,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # create messages
     @database_sync_to_async
     def create_message(self, forum, user, message, media):
-        forum.member.add(user)
+        forum.members.add(user)
         return Message.objects.create(
             forum=forum,
-            user=user,
-            message=message,
+            sender=user,
+            text=message,
             media=media
         )
