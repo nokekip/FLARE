@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Region, Forum, Media
+from .models import Region, Forum, Media, Message
 from .forms import CreateForumForm
 
 # Community home view
@@ -49,9 +49,11 @@ def create_forum(request):
 def forum(request, forum_id):
     forum = Forum.objects.get(id=forum_id)
     region = forum.region
+    forum_messages = Message.objects.filter(forum=forum)
     context = {
         'region': region,
         'forum': forum,
+        'forum_messages': forum_messages,
     }
     return render(request, 'community/forum.html', context)
 
