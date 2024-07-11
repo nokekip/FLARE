@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}FLARE - Weather Forecast{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center fs-3 p-2">Welcome, {{ user.username }}</h1>
+            <div>
+              <!-- Button trigger modal -->              
+                <button type="button" class="btn btn-primary mb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Create a Weather Alert
+                </button>             
+              
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog text-black">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="exampleModalLabel">Create New Forum</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data">
+                          {% csrf_token %}
+                                                   
+                          <div class="mb-3">
+                            <label for="title" class="form-label"> Alert title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="region" class="form-label">Region</label>
+                            <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                            <datalist id="region-list">
+                              <select name="" id="">
+                                    <option value="Nakuru"></option>
+                                    <option value="Baringo"></option>
+                                    <option value="Nairobi"></option>
+                                    <option value="Kisumu"></option>
+                              </select>
+                            </datalist>
+                          </div>
+                          <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="image" name="image" required>
+                            </div>
+                        <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Create</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <h2>All Weather Alerts</h2>
+
+            <div class="col-md-4 col-sm-12 pb-3">
+              <div class="card auth-card text-white" style="width: 18rem;">
+                <img src="" class="card-img-top" style="height: 15rem;"> 
+                <div class="card-body">
+                  <h5 class="card-title">Heavy rain</h5>
+                  <span class="badge">Baringo</span>
+                  <p class="card-text">There is a bridge that waas swept along Nakuru Sigor Area</p>                  
+                </div>
+              </div>
+            </div>
+            
+        </div>
+    </div>
+{% endblock content %}
