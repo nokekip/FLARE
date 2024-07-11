@@ -122,7 +122,7 @@
                         <div class="msg_cotainer sender_msg">
                             ${data.media_url ? `<img src="${data.media_url}" class="img_fluid msg_image">` : ''}
                             ${data.message ? data.message : ''}
-                            <span class="msg_time_send">Now</span>
+                            <span class="msg_time_send">${timeDisplay}</span>
                         </div>
                     </div>
                 `;
@@ -135,7 +135,7 @@
                         <div class="msg_cotainer">
                             ${data.media_url ? `<img src="${data.media_url}" class="img_fluid msg_image">` : ''}
                             ${data.message ? data.message : ''}
-                            <span class="msg_time">Now</span>
+                            <span class="msg_time">${timeDisplay}</span>
                         </div>
                     </div>
                 `;
