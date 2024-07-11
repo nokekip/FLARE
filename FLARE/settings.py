@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'forecast',
     'users',
     'community',
+    'weather_alert',
 
     'widget_tweaks',
 ]
