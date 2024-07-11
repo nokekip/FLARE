@@ -28,7 +28,7 @@ class WeatherAlertFile(models.Model):
 # ALert subscription
 class AlertSubscription(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    region = models.ManyToManyField(Region)
+    regions = models.ManyToManyField(Region)
 
     def __str__(self):
         return f'{self.user.username} subscriptions'
