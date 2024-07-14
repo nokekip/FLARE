@@ -3,7 +3,7 @@ from django.db import models
 from community.models import Region
 from django.contrib.auth import get_user_model
 
-User = get_user_model
+User = get_user_model()
 
 # Weather alert model.
 class WeatherAlert(models.Model):
