@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Region, Forum, Media, Message
 from .forms import CreateForumForm
+from weather_alert.models import WeatherAlert
 
 # Community home view
 @login_required
@@ -10,9 +11,11 @@ def community_home(request):
     form = CreateForumForm()
     regions = Region.objects.all()
     forums = Forum.objects.all()
+    weather_alerts = WeatherAlert.objects.all()
     context = {
         'regions': regions,
         'forums': forums,
+        'weather_alerts': weather_alerts,
         'form': form,
     }
 

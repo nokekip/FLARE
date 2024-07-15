@@ -96,36 +96,21 @@
             <div class="card auth-card text-white my-4">
               <h5 class="card-header fw-bold fs-4">Weather Alerts</h5>
               <div class="card-body">
+                {% if weather_alerts %}
+                {% for alert in weather_alerts %}
                 <div class="card text-whit bg-light mb-3">
                   <div class="card-body">
-    
                     <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                      <span class="badge text-bg-secondary">nakuru</span>
-                        <small class="fs-6 text-muted">now</small>
+                      <span class="badge text-bg-secondary">{{alert.region}}</span>
+                        <small class="fs-6 text-muted">{{alert.created_at| timesince}}</small>
                     </div>
-                    <p class="card-text">Brige swept</p>
+                    <p class="card-text">{{alert.title}}</p>
                   </div>
                 </div>
-                <div class="card text-whit bg-light mb-3">
-                    <div class="card-body">
-      
-                      <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                        <span class="badge text-bg-secondary">nakuru</span>
-                          <small class="fs-6 text-muted">now</small>
-                      </div>
-                      <p class="card-text">Brige swept</p>
-                    </div>
-                  </div>
-                  <div class="card text-whit bg-light mb-3">
-                    <div class="card-body">
-      
-                      <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
-                        <span class="badge text-bg-secondary">nakuru</span>
-                          <small class="fs-6 text-muted">now</small>
-                      </div>
-                      <p class="card-text">Brige swept</p>
-                    </div>
-                  </div>
+                  {% endfor %}
+                  {% else %}
+                  <h5>No Weather Alerts Availabe</h5>
+                  {% endif %}
               </div>
     
             </div>

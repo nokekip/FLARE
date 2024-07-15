@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}FLARE - Weather Forecast{% endblock title %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center fs-3 p-2">Welcome, {{ user.username }}</h1>
+            <div>
+              <!-- Button trigger modal -->              
+                <button type="button" class="btn btn-primary mb-3"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Create a Weather Alert
+                </button>             
+              
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog text-black">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 class="modal-title fs-5" id="exampleModalLabel">Create New Forum</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" enctype="multipart/form-data">
+                          {% csrf_token %}
+                                                   
+                          <div class="mb-3">
+                            <label for="title" class="form-label"> Alert Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                          </div>
+                          <div class="mb-3">
+                            <label for="region" class="form-label">Region</label>
+                            <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                            <datalist id="region-list">
+                              <select name="" id="">
+                                {% for region in region_choice %}
+                                  <option value="{{region}}"></option>
+                                {% endfor %}
+                              </select>
+                            </datalist>
+                          </div>
+                          <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Upload Image</label>
+                                <input type="file" class="form-control" id="image" name="file" required>
+                            </div>
+                        <button type="submit" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">Create</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            {% if alerts %}
+            <h2>All Weather Alerts</h2>
+            {% for alert in alerts %}
+              <div class="col-md-4 col-sm-12 pb-3">
+                <div class="card auth-card text-white" style="width: 18rem;">
+                  <img src="{{ alert.media.file.url }}" class="card-img-top" style="height: 14rem;"> 
+                  <div class="card-body">
+                    <h5 class="card-title">{{alert.title}}</h5>
+                    <span class="badge">{{alert.region}}</span>
+                    <p class="card-text">{{alert.description}}</p>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            {% else %}
+            <h2>No Weather Alerts</h2>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock content %}
