@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import WeatherAlertForm, WeatherAlertFileForm
-from .models import WeatherAlert, WeatherAlertFile
+from .models import WeatherAlert, WeatherAlertFile, AlertSubscription
 from community.models import Region
 
 
@@ -59,3 +59,21 @@ def add_alert(request):
         'region_choice': region_choice
     }
     return render(request, 'weather_alert/weather_alert.html', context)
+
+
+# Manage weather alerts Subscription
+@login_required
+def manage_subscription(request):
+    user_subscripiton, created = AlertSubscription.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        reg_selected = request.POST.getlist('regions').capitalize()
+        region_obj = []
+
+        for region in reg_selected:
+            region, created = Region.objects.get_or_create(name=region)
+            region_obj.append(region)
+
+        user_subscripiton.regions.set(region_obj)
+        messages.success(request, 'Subscription updated successfully')
+        return redirect('profile')
