@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.conf import settings
+from django.core.mail import send_mail
 from .forms import WeatherAlertForm, WeatherAlertFileForm
 from .models import WeatherAlert, WeatherAlertFile, AlertSubscription
 from community.models import Region
@@ -46,6 +48,17 @@ def add_alert(request):
             media=new_file,
             posted_by=posted_by
         )
+
+        # sending emails to subscribers
+        subscriptions = AlertSubscription.objects.filter(regions=region)
+        recipient_list = [subscription.user.email for subscription in subscriptions]
+
+        if recipient_list:
+            subject = f'New Weather Alert: {new_alert.title}'
+            message = f'New weather alert for region: {new_alert.region.name}\n\nDescription: {new_alert.description}'
+            from_email = settings.EMAIL_HOST_USER
+
+            send_mail(subject, message, from_email, recipient_list)
 
         messages.success(request, 'Alert added successfully')
         return redirect('weather-alert')
