@@ -17,7 +17,8 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateProfile">
                             Update Profile
                         </button>
-                        <!-- <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button> -->
+
+                        
                       </div>
                     </div>
                   </div>
@@ -63,8 +64,8 @@
                     </div>
                 </div>
             <!-- update user -->
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Update Subscription
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateSubscription">
+                Manage Subscription
             </button>
         
             <!-- Modal -->
@@ -103,6 +104,36 @@
                 </div>
             </div>
 
+            <!-- subscription -->
+            <div class="modal fade" id="updateSubscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Update Subscription</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="" method="POST">
+                          {% csrf_token %}
+                          <div class="mb-3">
+                              <label for="email" class="form-label"
+                                >Select Region</label
+                              >
+                              <input type="text" name="region" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                              <datalist id="region-list">
+                                <select name="" id="">
+                                  {% for region in region_choice %}
+                                    <option value="{{region}}"></option>
+                                  {% endfor %}
+                                </select>
+                              </datalist>
+                          </div>
+                          <input type="submit" value="Update" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
+                      </form>
+                  </div>
+              </div>
+              </div>
+          </div>
         </div>
     </div>
 {% endblock content %}
