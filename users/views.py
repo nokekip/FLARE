@@ -61,6 +61,7 @@ def logout_user(request):
 # User profile view
 @login_required
 def userProfile(request):
+    from weather_alert.views import counties
     user = request.user
     profile_form = UpdateUserForm(instance=user)
     if request.method == 'POST':
@@ -76,7 +77,8 @@ def userProfile(request):
             return redirect('profile')
     context = {
         'user': user,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'region_choice': counties
     }
 
     return render(request, 'users/profile.html', context)

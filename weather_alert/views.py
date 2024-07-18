@@ -90,3 +90,11 @@ def manage_subscription(request):
         user_subscripiton.regions.set(region_obj)
         messages.success(request, 'Subscription updated successfully')
         return redirect('profile')
+    else:
+        form = WeatherAlertFileForm()
+        context = {
+            'form': form,
+            'user_subscripiton': user_subscripiton,
+            'region_choice': counties
+        }
+        return render(request, 'weather_alert/manage_subscription.html', context)
