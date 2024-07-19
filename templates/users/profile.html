@@ -127,14 +127,14 @@
                               <label for="email" class="form-label"
                                 >Select Region</label
                               >
-                              <input type="text" name="regions" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
-                              <datalist id="region-list">
-                                <select name="" id="">
+                              <!-- <input type="text" name="regions" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                              <datalist id="region-list"> -->
+                                <select class="form-select" name="regions" id="" data-live-search="true"  multiple>
                                   {% for region in region_choice %}
-                                    <option value="{{region}}"></option>
+                                    <option value="{{region}}">{{region}}</option>
                                   {% endfor %}
                                 </select>
-                              </datalist>
+                              <!-- </datalist> -->
                           </div>
                           <input type="submit" value="Update" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
                       </form>
