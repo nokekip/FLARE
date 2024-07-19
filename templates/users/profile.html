@@ -12,12 +12,13 @@
                         class="rounded-circle img-fluid" style="width: 150px;">
                       <!-- <h5 class="my-3">John Smith</h5> -->
                       <p class="text-muted mb-1">@{{ user.username }}</p>
-                      <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                      <div class="d-flex justify-content-center mb-2">
+                      <div class="d-flex justify-content-around mb-2">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateProfile">
                             Update Profile
                         </button>
-                        <!-- <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button> -->
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateSubscription">
+                          Manage Subscription
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -30,7 +31,7 @@
                           <p class="mb-0">Full Name</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">{{ user.name }}</p>
+                          <p class="text-muted mb-0">{{ user.first_name }} {{ user.last_name }}</p>
                         </div>
                       </div>
                       <hr>
@@ -48,24 +49,29 @@
                           <p class="mb-0">Phone</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">(097) 234-5678</p>
+                          <p class="text-muted mb-0">{{ user.phone }}</p>
                         </div>
                       </div>
                       <hr>
                       <div class="row">
                         <div class="col-sm-3">
-                          <p class="mb-0">Address</p>
+                          <p class="mb-0">Subscribed regions</p>
                         </div>
                         <div class="col-sm-9">
-                          <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
+                          <p class="text-muted mb-0">
+                            {% if subscribed_regions %}
+                              {% for region in subscribed_regions %}
+                              {{ region.name }}{% if not forloop.last %}, {% endif %}
+                              {% endfor %}
+                            {% else %}
+                              No region subscribed
+                            {% endif %}
+                          </p>
                         </div>
                       </div>
                     </div>
                 </div>
             <!-- update user -->
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Update Subscription
-            </button>
         
             <!-- Modal -->
             <div class="modal fade" id="updateProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,13 +85,19 @@
                         <form action="" method="POST">
                             {% csrf_token %}
                             <div class="mb-3">
-                              <label for="email" class="form-label"
-                                >{{ profile_form.avatar.label }}</label
+                              <label for="first_name" class="form-label"
+                                >{{ profile_form.first_name.label }}</label
                               >
-                              {% render_field profile_form.avatar class="form-control" %}
+                              {% render_field profile_form.first_name class="form-control" %}
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label"
+                              <label for="last_name" class="form-label"
+                                >{{ profile_form.last_name.label }}</label
+                              >
+                              {% render_field profile_form.last_name class="form-control" %}
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label"
                                   >{{ profile_form.username.label }}</label
                                 >
                                 {% render_field profile_form.username class="form-control" %}
@@ -96,6 +108,18 @@
                                 >
                                 {% render_field profile_form.email class="form-control" %}
                             </div>
+                            <div class="mb-3">
+                              <label for="phone" class="form-label"
+                                >{{ profile_form.phone.label }}</label
+                              >
+                              {% render_field profile_form.phone class="form-control" %}
+                            </div>
+                            <div class="mb-3">
+                              <label for="avatar" class="form-label"
+                                >{{ profile_form.avatar.label }}</label
+                              >
+                              {% render_field profile_form.avatar class="form-control" %}
+                            </div>
                             <input type="submit" value="Update" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
                         </form>
                     </div>
@@ -103,6 +127,36 @@
                 </div>
             </div>
 
+            <!-- subscription -->
+            <div class="modal fade" id="updateSubscription" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Update Subscription</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{% url 'manage-subscription' %}" method="POST">
+                          {% csrf_token %}
+                          <div class="mb-3">
+                              <label for="email" class="form-label"
+                                >Select Region</label
+                              >
+                              <!-- <input type="text" name="regions" value="" class="form-control" id="region" aria-describedby="region" list="region-list" required>
+                              <datalist id="region-list"> -->
+                                <select class="form-select" name="regions" id="" data-live-search="true"  multiple>
+                                  {% for region in region_choice %}
+                                    <option value="{{region}}">{{region}}</option>
+                                  {% endfor %}
+                                </select>
+                              <!-- </datalist> -->
+                          </div>
+                          <input type="submit" value="Update" class="btn btn-primary col-lg-12 col-12 mt-2 mb-3">
+                      </form>
+                  </div>
+              </div>
+              </div>
+          </div>
         </div>
     </div>
 {% endblock content %}

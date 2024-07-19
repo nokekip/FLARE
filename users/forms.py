@@ -16,4 +16,4 @@ class RegisterUserForm(UserCreationForm):
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['avatar','username', 'email']
+        fields = ['first_name', 'last_name','username', 'avatar', 'email', 'phone']

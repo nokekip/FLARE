@@ -80,7 +80,8 @@ def manage_subscription(request):
     user_subscripiton, created = AlertSubscription.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        reg_selected = request.POST.getlist('regions').capitalize()
+        reg_selected = request.POST.getlist('regions')
+        reg_selected = [region.capitalize() for region in reg_selected]
         region_obj = []
 
         for region in reg_selected:
@@ -90,3 +91,11 @@ def manage_subscription(request):
         user_subscripiton.regions.set(region_obj)
         messages.success(request, 'Subscription updated successfully')
         return redirect('profile')
+    else:
+        form = WeatherAlertFileForm()
+        context = {
+            'form': form,
+            'user_subscripiton': user_subscripiton,
+            'region_choice': counties
+        }
+        return render(request, 'users/profile.html', context)
