@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterUserForm, UpdateUserForm
+from weather_alert.models import AlertSubscription
 
 
 User = get_user_model()
@@ -64,6 +65,11 @@ def userProfile(request):
     from weather_alert.views import counties
     user = request.user
     profile_form = UpdateUserForm(instance=user)
+    try:
+        user_subscripiton = AlertSubscription.objects.get(user=user)
+        subscribed_regions = user_subscripiton.regions.all()
+    except AlertSubscription.DoesNotExist:
+        subscribed_regions = []
     if request.method == 'POST':
         profile_form = UpdateUserForm(request.POST, request.FILES, instance=user)
         if profile_form.is_valid():
@@ -78,7 +84,8 @@ def userProfile(request):
     context = {
         'user': user,
         'profile_form': profile_form,
-        'region_choice': counties
+        'region_choice': counties,
+        'subscribed_regions': subscribed_regions
     }
 
     return render(request, 'users/profile.html', context)
