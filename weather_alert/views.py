@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
+from django.db.models import Q
 from .forms import WeatherAlertForm, WeatherAlertFileForm
 from .models import WeatherAlert, WeatherAlertFile, AlertSubscription
 from community.models import Region
@@ -71,6 +72,20 @@ def add_alert(request):
         'alerts': alerts,
         'region_choice': region_choice
     }
+    return render(request, 'weather_alert/weather_alert.html', context)
+
+# Listing alerts
+def weather_alerts(request):
+    q = request.GET.get('q') if request.GET.get('q') else ''
+    alerts = WeatherAlert.objects.filter(
+        Q(region__name__icontains=q) |
+        Q(title__icontains=q) |
+        Q(description__icontains=q)
+    )
+    context = {
+        'alerts': alerts
+    }
+
     return render(request, 'weather_alert/weather_alert.html', context)
 
 
