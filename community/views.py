@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .models import Region, Forum, Media, Message
 from .forms import CreateForumForm
 from weather_alert.models import WeatherAlert
@@ -9,8 +10,15 @@ from weather_alert.models import WeatherAlert
 @login_required
 def community_home(request):
     form = CreateForumForm()
-    regions = Region.objects.all()
-    forums = Forum.objects.all()
+    # regions = Region.objects.all()
+    # forums = Forum.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') else ''
+    regions = Region.objects.filter(name__icontains=q)
+    forums = Forum.objects.filter(
+        Q(region__name__icontains=q) |
+        Q(name__icontains=q) |
+        Q(description__icontains=q)
+    )
     weather_alerts = WeatherAlert.objects.all()
     context = {
         'regions': regions,
