@@ -119,3 +119,6 @@ def get_location_from_ip():
     lon = location['longitude']
     lat = location['latitude']
     return city, country, lon, lat
+
+def emg_contacts(request):
+    return render(request, 'forecast/emergency_contacts.html')
