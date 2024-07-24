@@ -122,3 +122,6 @@ def get_location_from_ip():
 
 def emg_contacts(request):
     return render(request, 'forecast/emergency_contacts.html')
+
+def about(request):
+    return render(request, 'forecast/about.html')

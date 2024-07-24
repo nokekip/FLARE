@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}FLARE - About{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 card-scroll">
+            <div class="auth-card p-3">
+            <h1>About Us</h1>
+            <p>Welcome to our weather forecast and community website!</p>
+            <p>Our platform is dedicated to providing accurate and timely weather forecasts to keep you informed about the latest weather conditions. We also offer a community space where users can interact, share insights, and discuss weather-related topics.</p>
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide reliable weather information and foster a community of weather enthusiasts who can share knowledge and experiences.</p>
+            <h2>Features</h2>
+            <ul>
+                <li>Real-time weather forecasts</li>
+                <li>Community interaction and discussion</li>
+                <li>Personalized weather alerts</li>
+                <li>Subscription to weather alerts for specific regions</li>
+            </ul>
+            <h2 class="display5 fw-bold mb-4">Contact Me</h2>
+            <div class="row">
+                <div class="col-md-4">
+                <div class="contact-item d-flex mb-3">
+                    <div class="icon fs-4 ">
+                    <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="text">
+                    <p class="fs-5">Email</p>
+                    <p class="text-white">techynoke@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item d-flex mb-3">
+                    <div class="icon fs-4">
+                    <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="text">
+                    <p class="fs-5">Phone</p>
+                    <p class="text-white">+254720218679</p>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-8">
+                <div class="contact-form">
+                    <form name="submit-to-google-sheet">
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                        <input name="Name" type="text" placeholder="Your Name"
+                            class="form-control form-control-lg fs-6 border-0 shadow-sm">
+                        </div>
+                        <div class="col-lg-6 mb-4">
+                        <input name="Email" type="email" placeholder="Your Email"
+                            class="form-control form-control-lg fs-6 border-0 shadow-sm" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                        <input name="Subject" type="text" placeholder="Subject" class="form-control form-control-lg fs-6 border-0 shadow-sm">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                        <textarea name="Message" type="text" rows="5" placeholder="Enter Message"
+                            class="form-control form-control-lg fs-6 border-0 shadow-sm"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                        <button type="submit" class="btn btn-outline-primary px-3">Send Message</button>
+                        </div>
+                    </div>
+                    </form>
+                    <span class="p-2" id="confMsg"></span>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
