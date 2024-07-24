@@ -94,3 +94,13 @@ body {
 .day p {
     margin: 5px 0;
 }
+
+.card-scroll {
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.forum-list {
+    height: 75vh;
+    overflow-y: scroll;
+}
