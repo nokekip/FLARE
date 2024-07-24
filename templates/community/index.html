@@ -4,7 +4,7 @@
 {% load widget_tweaks %}
 <div class="container">
     <div class="row">
-        <div class="col-3 p-2">
+        <div class="col-sm-3 d-none d-sm-block p-2">
           <h3 class="pt-2 fs-4 fw-bold">Regions</h3>
             <div class="card auth-card">
               <div class="p-3">
@@ -12,16 +12,16 @@
                     {% for region in regions %}
                       <li class="d-flex justify-content-between align-items-start pb-4 fs-5">
                         <div class="ms-2 me-auto">
-                          <div class="fw-medium">{{region.name}}</div>
+                          <div class="text-white fw-medium">{{region.name}}</div>
                         </div>
-                        <span class="badge text-bg-primary rounded-pill">{{region.forum_set.all.count}}</span>
+                        <span class="badge text-bg-light rounded-pill">{{region.forum_set.all.count}}</span>
                       </li>
                     {% endfor %}
                   </ul>
               </div>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-sm-6">
             <div class="container">
                 <div class="d-flex justify-content-between py-4">
                     <h3 class="fs-4 fw-bold" >Forums</h3>
@@ -68,17 +68,19 @@
                     </div>
                 </div>
                 {% for forum in forums %}
-                  <div class="card auth-card text-white mb-4">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="d-flex py-2 align-items-center">
-                          <img src="{{forum.owner.avatar.url}}" alt="user" class="rounded-circle" width="40" height="40">
-                          <h6 class="ms-2 pt-2">@{{forum.owner.username}}</h6>
-                        </div>
-                        <small>{{forum.created_at|timesince}}</small>
+                <div class="card auth-card text-white mb-4">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex py-2 align-items-center">
+                        <img src="{{forum.owner.avatar.url}}" alt="user" class="rounded-circle" width="40" height="40">
+                        <h6 class="ms-2 pt-2">@{{forum.owner.username}}</h6>
                       </div>
-                      <a href="{% url 'forum' forum.id %}"><h5 class="card-title">{{forum.name}}</h5></a>
+                      <small>{{forum.created_at|timesince}}</small>
+                    </div>
+                    <a href="{% url 'forum' forum.id %}" class="text-decoration-none text-white">
+                      <h5 class="card-title">{{forum.name}}</h5>
                       <p class="card-text">{{forum.description}}</p>
+                    </a>
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                       <div class="icon">
@@ -92,7 +94,7 @@
             </div>
         </div>
         
-        <div class="col-3">
+        <div class="col-sm-4 col-md-3">
             <div class="card auth-card text-white my-4">
               <h5 class="card-header fw-bold fs-4">Weather Alerts</h5>
               <div class="card-body">

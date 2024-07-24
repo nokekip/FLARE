@@ -2,9 +2,6 @@ body,
 html {
   height: 100%;
   margin: 0;
-  /* background: #7f7fd5;
-  background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
-  background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5); */
 }
 .chat {
   margin-top: auto;
@@ -149,16 +146,7 @@ html {
   font-size: 10px;
   color: rgba(255, 255, 255, 0.6);
 }
-.video_cam {
-  margin-left: 50px;
-  margin-top: 5px;
-}
-.video_cam span {
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 20px;
-}
+
 .msg_cotainer {
   max-width: 18rem;
   margin-top: auto;

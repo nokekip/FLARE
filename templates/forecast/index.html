@@ -2,46 +2,71 @@
 {% block title %}FLARE - Weather Forecast{% endblock title %}
 {% block content %}
     <div class="container">
-        <div class="container card forecast-container mt-5">
-            <div class="header">
-                <h1 class="mb-3">Weather Forecast</h1>
-                <form action="" method="POST" class="d-flex justify-content-center" role="search">
-                    {% csrf_token %}
-                    <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="current-weather">
-                {% if weather_data %}
-                    <div class="current-weather-icon">
-                        <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
+        <div class="row">
+            <div class="col-md col-xl-8">
+                <div class="container text-white card forecast-container mt-5">
+                    <div class="header">
+                        <h1 class="mb-3">Weather Forecast</h1>
+                        <form action="" method="POST" class="d-flex justify-content-center" role="search">
+                            {% csrf_token %}
+                            <input name="city" class="form-control me-2 city-search" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
                     </div>
-                    <div class="weather-info">
-                        <h2>{{weather_data.city}} - {{weather_data.country}} </h2>
-                        <p class="temperature">{{ weather_data.temperature }}°C</p>
-                        <div class="details">
-                            <p>Description: {{ weather_data.description}}</p>
-                            <p>Humidity: {{weather_data.humidity}}%</p>
-                            <p>Wind: {{weather_data.wind_speed}}km/h</p>
-                            <p>H: {{weather_data.max_temp}}°C  L: {{weather_data.min_temp}}°C</p>
-                        </div>
-                    </div>
-                {% endif %}
-    
-                
-            </div>
-            <div class="forecast">
-                {% if forecast_data %}
-                    {% for forecast in forecast_data %}
-                        <div class="card day">
-                            <div class="weather-icon">
-                                <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                    <div class="current-weather">
+                        {% if weather_data %}
+                            <div class="current-weather-icon">
+                                <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
                             </div>
-                            <p>{{forecast.temperature}}°C</p>
-                            <p>{{forecast.day}}</p>
+                            <div class="weather-info">
+                                <h2>{{weather_data.city}} - {{weather_data.country}} </h2>
+                                <p class="temperature">{{ weather_data.temperature }}°C</p>
+                                <div class="details">
+                                    <p>Description: {{ weather_data.description}}</p>
+                                    <p>Humidity: {{weather_data.humidity}}%</p>
+                                    <p>Wind: {{weather_data.wind_speed}}km/h</p>
+                                    <p>H: {{weather_data.max_temp}}°C  L: {{weather_data.min_temp}}°C</p>
+                                </div>
+                            </div>
+                        {% endif %}   
+                        
+                    </div>
+                    <div class="d-flex forecast">
+                        {% if forecast_data %}
+                            {% for forecast in forecast_data %}
+                                <div class="card day text-white">
+                                    <div class="weather-icon">
+                                        <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+                                    </div>
+                                    <p>{{forecast.temperature}}°C</p>
+                                    <p>{{forecast.day}}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xl-4 mt-4">
+                <div class="card auth-card text-white my-4">
+                  <h5 class="card-header fw-bold fs-4">Weather Alerts</h5>
+                  <div class="card-body">
+                    {% if weather_alerts %}
+                    {% for alert in weather_alerts %}
+                    <div class="card text-whit bg-light mb-3">
+                      <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start pb-4 fs-5">
+                          <span class="badge text-bg-secondary">{{alert.region}}</span>
+                            <small class="fs-6 text-muted">{{alert.created_at| timesince}}</small>
                         </div>
-                    {% endfor %}
-                {% endif %}
+                        <p class="card-text">{{alert.title}}</p>
+                      </div>
+                    </div>
+                      {% endfor %}
+                      {% else %}
+                      <h5>No Weather Alerts Availabe</h5>
+                      {% endif %}
+                  </div>
+                </div>
             </div>
         </div>
     </div>
