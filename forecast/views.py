@@ -2,9 +2,11 @@ import datetime
 import requests
 import os
 from django.shortcuts import render
+from weather_alert.models import WeatherAlert
 
 # forecast homepage view
 def home(request):
+    weather_alerts = WeatherAlert.objects.all()
     API_KEY = os.environ.get('WEATHER_API_KEY')
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
     forecast_url = 'https://api.openweathermap.org/data/3.0/onecall?lat={}&lon={}&exclude=current,minutely,hourly&appid={}'
@@ -46,6 +48,7 @@ def home(request):
             'weather_data': weather_data,
             'forecast_data': forecast_data,
             'alerts': alerts,
+            'weather_alerts': weather_alerts,
         }
 
         return render(request, 'forecast/index.html', context)
@@ -59,6 +62,7 @@ def home(request):
             'weather_data': weather_data,
             'forecast_data': forecast_data,
             'alerts': alerts,
+            'weather_alerts': weather_alerts,
         }
         return render(request, 'forecast/index.html', context)
     
