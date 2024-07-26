@@ -11,8 +11,8 @@ class WeatherAlertFile(models.Model):
     file = models.FileField(upload_to='weather_alerts/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    def __str___(self):
-        return f'File for alert: {self.alert.title}'
+    def __str__(self):
+        return f'File for alert: {self.file}' if self.file else 'No file'
 
 # Weather alert model.
 class WeatherAlert(models.Model):
@@ -24,8 +24,11 @@ class WeatherAlert(models.Model):
     posted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
-        return self.title
+        return self.title if self.title else "No Title"
     
 # ALert subscription
 class AlertSubscription(models.Model):
