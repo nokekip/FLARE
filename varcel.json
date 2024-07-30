@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "orgmansys/wsgi.py",
+            "src": "FLARE/asgi.py",
             "use": "@vercel/python",
             "config": {"maxLambdaSize": "15mb", "runtime": "python3.9"}
         }
@@ -9,7 +9,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "orgmansys/wsgi.py"
+            "dest": "FLARE/asgi.py"
         }
     ]
 }
