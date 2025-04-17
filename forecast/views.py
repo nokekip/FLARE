@@ -3,11 +3,12 @@ import requests
 import os
 from django.shortcuts import render
 from weather_alert.models import WeatherAlert
+from django.conf import settings
 
 # forecast homepage view
 def home(request):
     weather_alerts = WeatherAlert.objects.all()
-    API_KEY = os.environ.get('WEATHER_API_KEY')
+    API_KEY = settings.WEATHER_API_KEY
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
     forecast_url = 'https://api.openweathermap.org/data/3.0/onecall?lat={}&lon={}&exclude=current,minutely,hourly&appid={}'
 
@@ -109,16 +110,25 @@ def fetch_weather(city, api_key, current_weather_url, forecast_url):
 
 # get locationn by ip address
 def get_location_from_ip():
-    response = requests.get('https://api64.ipify.org?format=json').json()
-    ip = response['ip']
+    try:
+        ip_response = requests.get('https://api64.ipify.org?format=json').json()
+        ip = ip_response.get('ip')
 
-    location = requests.get(f'https://ipapi.co/{ip}/json/').json()
+        location_response = requests.get(f'https://ipapi.co/{ip}/json/').json()
 
-    city = location['city']
-    country = location['country_name']
-    lon = location['longitude']
-    lat = location['latitude']
-    return city, country, lon, lat
+        if location_response.get('error'):
+            # Fallback if rate limited
+            raise Exception(location_response.get('message', 'Rate limit or other error'))
+
+        city = location_response.get('city', 'Nairobi')
+        country = location_response.get('country_name', 'Kenya')
+        lon = location_response.get('longitude', 36.8219)
+        lat = location_response.get('latitude', -1.2921)
+
+        return city, country, lon, lat
+    except Exception as e:
+        print(f"[GeoIP fallback] Reason: {e}")
+        return 'Nairobi', 'Kenya', 36.8219, -1.2921
 
 def emg_contacts(request):
     return render(request, 'forecast/emergency_contacts.html')
